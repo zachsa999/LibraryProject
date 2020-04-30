@@ -1,9 +1,14 @@
 package com.javalearners.libraryapp.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
+public class Customer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6377397939836943218L;
 	private String firstName;
 	private String lastName;
 	private UserAccount userAccount;
