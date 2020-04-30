@@ -29,7 +29,7 @@ public class CustomerDisplayController {
 			return temporary = customers.stream().sorted(Comparator.comparing(Customer::getName).thenComparing(Customer::getLastName)).
 					collect(Collectors.toList());
 		} else if(attribute.equalsIgnoreCase("Last name")) {
-			return temporary = customers.parallelStream().sorted(Comparator.comparing(Customer::getLastName).thenComparing(Customer::getName)).
+			return temporary = customers.stream().sorted(Comparator.comparing(Customer::getLastName).thenComparing(Customer::getName)).
 						collect(Collectors.toList());
 		}
 		return temporary;
