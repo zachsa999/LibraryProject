@@ -1,6 +1,12 @@
 package com.javalearners.libraryapp.model;
 
-public class UserAccount {
+import java.io.Serializable;
+
+public class UserAccount implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8085697100546135556L;
 	private String login;
 	private String password;
 	
