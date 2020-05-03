@@ -64,4 +64,18 @@ public class Customer implements Serializable {
 		return this.lastName;
 	}
 	
+	public boolean equals(Object another) {
+		if(this == another) {
+			return true;
+		}
+		if(!(another instanceof Customer)) {
+			return false;
+		}
+		Customer object = (Customer) another;
+		if(this.firstName.equalsIgnoreCase(object.firstName) && this.lastName.equalsIgnoreCase(object.lastName)) {
+			return true;
+		}
+		return false;
+	}
+	
 }
