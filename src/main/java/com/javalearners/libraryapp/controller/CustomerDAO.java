@@ -14,11 +14,12 @@ import com.javalearners.libraryapp.model.Customer;
 
 public class CustomerDAO {
 	private static List<Customer> customers = new ArrayList<>();
+	private static File registry = new File("src/main/resources/customer/Customers.data");
 
 	@SuppressWarnings("unchecked")
 	public static List<Customer> getCustomers() {
 		if (customers.isEmpty()) {
-			try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("Customers.data"))) {
+			try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream(registry))) {
 				customers = (ArrayList<Customer>) oos.readObject();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Class not found");
@@ -33,8 +34,8 @@ public class CustomerDAO {
 
 	public static void saveCustomers() {
 		if (!customers.isEmpty()) {
-			File registry = new File("Customers.data");
 			try {
+				registry.getParentFile().mkdirs();
 				registry.createNewFile();
 			} catch (IOException e1) {
 				System.out.println("Unable to create a new file");
