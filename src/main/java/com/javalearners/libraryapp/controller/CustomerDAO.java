@@ -1,20 +1,17 @@
 package com.javalearners.libraryapp.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.javalearners.libraryapp.model.Customer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CustomerDAO {
 	private static List<Customer> customers = new ArrayList<>();
 	private static File registry = new File("src/main/resources/customer/Customers.data");
+	private static Logger logger = LogManager.getLogger();
 
 	@SuppressWarnings("unchecked")
 	public static List<Customer> getCustomers() {
@@ -22,11 +19,12 @@ public class CustomerDAO {
 			try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream(registry))) {
 				customers = (ArrayList<Customer>) oos.readObject();
 			} catch (ClassNotFoundException e) {
-				System.out.println("Class not found");
+				logger.error("Class not found");
 			} catch (FileNotFoundException e1) {
-				System.out.println("File not found, no existing users");
+				logger.error("File not found, no existing users");
 			} catch (IOException e1) {
 				e1.printStackTrace();
+				logger.error("Threw a IOException in CustomerDAO::getCustomers(), full stack trace follows:", e1);
 			}
 		}
 		return customers;
@@ -38,14 +36,14 @@ public class CustomerDAO {
 				registry.getParentFile().mkdirs();
 				registry.createNewFile();
 			} catch (IOException e1) {
-				System.out.println("Unable to create a new file");
+				logger.error("Unable to create a new file");
 			}
 			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(registry, false))) {
 				oos.writeObject(customers);
 			} catch (FileNotFoundException e) {
-				System.out.println("Unable to create the file, user may not have permission");
+				logger.error("Unable to create the file, user may not have permission");
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("Threw a IOException in CustomerDAO::saveCustomers(), full stack trace follows:", e);
 			}
 		}
 	}
