@@ -5,13 +5,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.javalearners.libraryapp.data.CustomerDAO;
 import com.javalearners.libraryapp.model.Customer;
 
 public class CustomerDisplayController {
 	private static List<Customer> customers;
 	
 	static {
-		List<Customer> temp = CustomerDAO.getCustomers();
+		CustomerDAO customerDAO = new CustomerDAO();
+		List<Customer> temp = customerDAO.getList();
 		for(Customer c : temp) {
 			customers.add(c);
 		}
